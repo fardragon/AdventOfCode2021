@@ -10,3 +10,4 @@ add_library(shared_lib OBJECT shared/shared.cpp)
 target_include_directories(shared_lib PUBLIC shared)
 
 add_subdirectory(day1)
+add_subdirectory(day2)
