@@ -1,8 +1,6 @@
 #include "shared.hpp"
 
 #include <fstream>
-#include <stdexcept>
-#include <charconv>
 
 std::vector<std::string> LoadLines(const std::string &path)
 {
@@ -24,16 +22,6 @@ std::vector<std::string> LoadLines(const std::string &path)
 	return result;
 }
 
-std::uint16_t StrToUint16(std::string_view sv)
-{
-	uint16_t value;
-	const auto res = std::from_chars(sv.begin(), sv.end(), value);
-	if (res.ec != std::errc())
-	{
-		throw std::runtime_error("Failed to parse input");
-	}
-	return value;
-}
 
 std::vector<std::uint16_t> LinesToUint16(const std::vector<std::string> &lines)
 {
@@ -43,7 +31,7 @@ std::vector<std::uint16_t> LinesToUint16(const std::vector<std::string> &lines)
 	std::transform(lines.begin(), lines.end(), std::back_inserter(result),
 	               [](const auto &str)
 	               {
-		               return StrToUint16(str);
+		               return StrToInteger<std::uint16_t>(str, 10);
 	               });
 	return result;
 }
@@ -59,10 +47,10 @@ std::vector<std::pair<std::string, std::uint16_t>> LinesToStrUint16(const std::v
 			throw std::runtime_error("Failed to parse input");
 		}
 		auto command = line.substr(0, sep);
-		const auto argument = StrToUint16({line.begin() + static_cast<long int>(sep) + 1, line.end()});
+		const auto argument = StrToInteger<std::uint16_t>({line.begin() + static_cast<long int>(sep) + 1, line.end()},
+		                                                  10);
 		result.emplace_back(std::move(command), argument);
 	}
 	return result;
 }
-
 
