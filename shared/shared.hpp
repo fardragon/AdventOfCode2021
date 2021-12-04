@@ -10,7 +10,7 @@
 [[nodiscard]] std::vector<std::string> LoadLines(const std::string &path);
 
 template <class N>
-[[nodiscard]] N StrToInteger(std::string_view sv, int base);
+[[nodiscard]] N StrToInteger(std::string_view sv, int base = 10);
 [[nodiscard]] std::vector<std::uint16_t> LinesToUint16(const std::vector<std::string> &lines);
 [[nodiscard]] std::vector<std::pair<std::string, std::uint16_t>> LinesToStrUint16(const std::vector<std::string> &lines);
 
