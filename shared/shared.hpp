@@ -13,6 +13,8 @@ template <class N>
 [[nodiscard]] N StrToInteger(std::string_view sv, int base = 10);
 [[nodiscard]] std::vector<std::uint16_t> LinesToUint16(const std::vector<std::string> &lines);
 [[nodiscard]] std::vector<std::pair<std::string, std::uint16_t>> LinesToStrUint16(const std::vector<std::string> &lines);
+[[nodiscard]] std::vector<std::string> SplitStringWhitespace(const std::string &str);
+[[nodiscard]] std::vector<std::string> SplitString(const std::string &str, char delimiter);
 
 template<class N>
 N StrToInteger(std::string_view sv, int base)

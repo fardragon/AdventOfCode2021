@@ -2,9 +2,7 @@
 #include "shared.hpp"
 #include "BingoBaord.hpp"
 #include <iostream>
-#include <sstream>
 #include <chrono>
-#include <iterator>
 
 
 std::pair<std::vector<std::uint8_t>, std::vector<Board>> ParseInput(const std::vector<std::string> &input);
@@ -86,26 +84,21 @@ std::pair<std::vector<std::uint8_t>, std::vector<Board>> ParseInput(const std::v
 
 std::vector<std::uint8_t> ParseNumbers(std::string_view numbers)
 {
+	auto splitNumbers = SplitString({numbers.data(), numbers.size()}, ',');
 	std::vector<std::uint8_t> result{};
+	result.reserve(splitNumbers.size());
 
-	std::istringstream stream{{numbers.begin(), numbers.end()}};
-	std::string number;
-	while (std::getline(stream, number, ','))
+	for (const auto &number: splitNumbers)
 	{
 		result.push_back(StrToInteger<std::uint8_t>(number));
 	}
-
 	return result;
 }
 
 std::vector<std::uint8_t> ParseBoardElements(std::string_view elements)
 {
 	std::vector<std::uint8_t> result{};
-	std::istringstream stream{{elements.begin(), elements.end()}};
-	std::vector<std::string> boardElements;
-	std::copy(std::istream_iterator<std::string>(stream),
-	          std::istream_iterator<std::string>(),
-	          std::back_inserter(boardElements));
+	std::vector<std::string> boardElements = SplitStringWhitespace({elements.data(), elements.size()});
 
 	result.reserve(boardElements.size());
 	for (const auto &element: boardElements)
