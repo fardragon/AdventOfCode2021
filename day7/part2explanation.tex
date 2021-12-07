@@ -1,0 +1,59 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+%opening
+\title{Advent of Code 2021 Day 7 Part 2}
+\author{fardragon}
+
+\begin{document}
+
+\maketitle
+
+Fuel usage for single ship from posistion $p_i$ to position $k$ :
+
+\begin{equation}
+\begin{split}
+& f_s (p_i, k) = 1+2+ \dots + |k - p_i| \\
+& = \sum^{|k - p+i|}_{n = 0} n \\
+& = \frac{(k-p_i)^2 + |k-p_i|}{2}
+\end{split}
+\end{equation}
+
+
+Fuel usage for all $s$ ships to position $k$ :
+\begin{equation}
+\begin{split}
+& f(k) = \sum^{s}_{i=1} f_s(p_i, k) \\
+& = \sum^{s}_{i=1} \frac{(k-p_i)^2 + |k-p_i|}{2}
+\end{split}
+\end{equation}
+
+To find the solution we need to find the $k$ value that minimizes to function $f$.
+To find a function minimum we need to calculate it's derivative:
+
+\begin{equation}
+f'(k) = \sum^{s}_{i=1} \frac{2(k-p_i) + sgn(k - p_i)}{2}
+\end{equation}
+
+If we comapre it to $0$ and rearrange:
+\begin{equation}
+\sum^{s}_{i=1} \frac{2(k-p_i) + sgn(k - p_i)}{2} = 0
+\end{equation}
+
+\begin{equation}
+\sum^{s}_{i=1} p_i = sk + \sum^{s}_{i=1} \frac{sgn(k - p_i)}{2}
+\end{equation}
+
+This gives us and expression for k in almost closed form:
+
+\begin{equation}
+k = \frac{\sum^{s}_{i=1}p_i}{s} - \frac{1}{2}\frac{\sum^{s}_{i=1} sgn(k - p_i)}{s}
+\end{equation}
+\clearpage
+The second term depends on k, but we may find it's upper and lower bounds. $\sum^{s}_{i=1} sgn(k - p_i)$ is at most $s$, if $p_i > k$ for all $i$. At minimum it is $-s$ , if $p_i < k$ for all $i$. Taking it into account we can bound the second term to values between $-\frac{1}{2}$ and $\frac{1}{2}$. Additionaly if we notice that the first term $\frac{\sum^{s}_{i=1}p_i}{s}$ is the arithmetic mean of $p_i$, the value $k$ is bounded by:
+\begin{equation}
+\overline{p} - \frac{1}{2} \leq k \leq \overline{p} + \frac{1}{2}
+\end{equation}
+
+\end{document}
