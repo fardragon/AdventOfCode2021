@@ -2,19 +2,13 @@
 #include "shared.hpp"
 #include <iostream>
 #include <chrono>
-#include <array>
 #include <numeric>
 #include <vector>
 
 std::vector<std::uint16_t> ParseInput(const std::vector<std::string> &lines);
 
 std::uint64_t SolvePart1(std::vector<std::uint16_t> startingPositions);
-
 std::uint64_t SolvePart2(std::vector<std::uint16_t> startingPositions);
-
-using State = std::array<std::uint64_t, 9>;
-
-State SimulateDay(const State &currentState);
 
 
 int main(int argc, char **argv)
@@ -89,7 +83,7 @@ std::uint64_t SolvePart1(std::vector<std::uint16_t> startingPositions)
 
 std::uint64_t SolvePart2(std::vector<std::uint16_t> startingPositions)
 {
-	// The result should be in the interval [mean - 0.5, mean + 0.5]. This finding the minima of the fuel usage function
+	// The result should be in the interval [mean - 0.5, mean + 0.5]. This comes from the minimum of the fuel usage function
 
 	const auto findFuelUsage = [](const std::vector<std::uint16_t> &startingPositions, uint16_t desiredPosition)
 	{
