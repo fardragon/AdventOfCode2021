@@ -35,6 +35,6 @@ cmake-build-debug/
 cmake-build-release/
 bin/
 input.txt
-test.txt
+test*.txt
 .idea
 Makefile
