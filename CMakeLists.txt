@@ -9,7 +9,7 @@ add_compile_options(-Wall -Wextra -pedantic -Werror)
 add_library(shared_lib OBJECT shared/shared.cpp)
 target_include_directories(shared_lib PUBLIC shared)
 
-set (DAYS 9)
+set (DAYS 10)
 foreach (index RANGE 1 ${DAYS})
     add_subdirectory("day${index}")
 endforeach()
