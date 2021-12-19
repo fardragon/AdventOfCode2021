@@ -4,6 +4,7 @@
 #include <chrono>
 #include <set>
 #include <vector>
+#include <unordered_map>
 #include "Beacon.hpp"
 #include "Scanner.hpp"
 
@@ -89,18 +90,17 @@ std::pair<Scanner, std::vector<Offset>> SolveIntermediate(const std::vector<Scan
 	std::vector<Offset> offsets{{0, 0, 0}};
 	offsets.reserve(scanners.size());
 
-	std::set<Scanner> unresolvedScanners;
+	std::set<std::pair<Scanner, std::vector<Scanner>>> unresolvedScanners;
 	for (auto it = std::next(scanners.begin(), 1); it != scanners.end(); ++it)
 	{
-		unresolvedScanners.insert(*it);
+		unresolvedScanners.insert(std::make_pair(*it, it->GetAllRotations()));
 	}
 
 	while (!unresolvedScanners.empty())
 	{
 		auto foundMatch = false;
-		for (const auto &candidateScanner: unresolvedScanners)
+		for (const auto &[candidateScanner, rotations]: unresolvedScanners)
 		{
-			const auto rotations = candidateScanner.GetAllRotations();
 			for (const auto &rotation: rotations)
 			{
 				if (const auto offset = CompareTwoScanners(referenceScanner, rotation); offset.has_value())
@@ -114,7 +114,7 @@ std::pair<Scanner, std::vector<Offset>> SolveIntermediate(const std::vector<Scan
 			}
 			if (foundMatch)
 			{
-				unresolvedScanners.erase(candidateScanner);
+				unresolvedScanners.erase(std::make_pair(candidateScanner, rotations));
 				break;
 			}
 		}
