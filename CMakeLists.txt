@@ -10,7 +10,7 @@ add_library(shared_lib OBJECT shared/shared.cpp)
 target_include_directories(shared_lib PUBLIC shared)
 
 
-set (DAYS 22)
+set (DAYS 23)
 foreach (index RANGE 1 ${DAYS})
     add_subdirectory("day${index}")
 endforeach()
